@@ -12,10 +12,11 @@ def search_timer(selected_search, puzzle):
     print('Path:', actions)
     print('Path length:', search.get_cost_of_actions(actions))
     print('Time taken in seconds:', time_taken)
+    print('Expanded nodes:', puzzle.expanded_nodes)
 
 
 if __name__ == '__main__':
-    puzzle = puzzle.puzzle()
+    puzzle_instance = puzzle.puzzle()
     # selected_search = search.depth_first_search
     selected_search = search.breadth_first_search
-    search_timer(selected_search, puzzle)
+    search_timer(selected_search, puzzle_instance)

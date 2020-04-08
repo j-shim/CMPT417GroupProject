@@ -23,11 +23,16 @@ class puzzle:
     def __init__(self):
         self.dimension = config['dimension']
         self.goal_state = config['goal_state']
+        self.start_state = self.__initialize_start_state()
+        self.expanded_nodes = 0
 
     def is_goal_state(self, state):
         return state == self.goal_state
 
     def get_start_state(self):
+        return self.start_state
+
+    def __initialize_start_state(self):
         initial_list = config['initial_list']
         random_puzzle = []
         for i in range(self.dimension):
@@ -51,7 +56,8 @@ class puzzle:
         successors = []
         for action in legal_actions:
             successor_state = self.__get_successor_state(state, action)
-            successors.append((successor_state, action))
+            successors.append((successor_state, action, 1))
+        self.expanded_nodes += 1
         return successors
 
     def __get_successor_state(self, state, action):
