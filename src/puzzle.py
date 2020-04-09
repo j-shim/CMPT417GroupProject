@@ -8,6 +8,7 @@ config = {
                    [4, 5, 6],
                    [7, 8, empty_space]],
     'dimension': 3,
+    'num_of_shuffle_moves': 100,
     'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, empty_space]
 }
 
@@ -23,16 +24,28 @@ class puzzle:
     def __init__(self):
         self.dimension = config['dimension']
         self.goal_state = config['goal_state']
-        self.start_state = self.__initialize_start_state()
+        # self.start_state = self.__initialize_start_state()
+        self.start_state = self.__shuffle_goal_state(
+            config['num_of_shuffle_moves'])
         self.expanded_nodes = 0
 
     def is_goal_state(self, state):
         return state == self.goal_state
 
     def get_start_state(self):
-        return self.start_state
+        return copy.deepcopy(self.start_state)
+
+    def __shuffle_goal_state(self, num_of_shuffle_moves):
+        """ The shuffled state will always have a complete solution (i.e. Path cannot be None) """
+        shuffled_state = copy.deepcopy(self.goal_state)
+        for i in range(num_of_shuffle_moves):
+            legal_actions = self.__get_legal_actions(shuffled_state)
+            action = random.choice(legal_actions)
+            shuffled_state = self.__get_successor_state(shuffled_state, action)
+        return shuffled_state
 
     def __initialize_start_state(self):
+        """ The return state may have an incomplete solution (i.e. Path could be None) """
         initial_list = config['initial_list']
         random_puzzle = []
         for i in range(self.dimension):
@@ -52,7 +65,7 @@ class puzzle:
         return None  # this should never happen
 
     def get_successors(self, state):
-        legal_actions = self.get_legal_actions(state)
+        legal_actions = self.__get_legal_actions(state)
         successors = []
         for action in legal_actions:
             successor_state = self.__get_successor_state(state, action)
@@ -85,7 +98,7 @@ class puzzle:
             next_state[empty_location[0]][empty_location[1]] = tmp
         return next_state
 
-    def get_legal_actions(self, state):
+    def __get_legal_actions(self, state):
         empty_location = self.__get_empty_location(state)
         actions = []
         if empty_location[0] - 1 >= 0:
@@ -97,3 +110,14 @@ class puzzle:
         if empty_location[1] + 1 < self.dimension:
             actions.append('Right')
         return actions
+
+    def print_start_state(self):
+        print('Start State:')
+        for i in range(self.dimension):
+            print(self.start_state[i])
+
+    def verify_computed_path(self, path):
+        state = copy.deepcopy(self.start_state)
+        for action in path:
+            state = self.__get_successor_state(state, action)
+        return self.is_goal_state(state)
