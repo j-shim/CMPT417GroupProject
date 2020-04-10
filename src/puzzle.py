@@ -2,6 +2,8 @@ import random
 import copy
 
 empty_space = ' '
+
+""" Use this config for 8-puzzle (comment out other config) """
 config = {
     'empty_space': empty_space,
     'goal_state': [[1, 2, 3],
@@ -12,12 +14,22 @@ config = {
     'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, empty_space]
 }
 
+""" Use this config for 15-puzzle (comment out other config) """
 # config = {
-#     'goal_state': [[1, 2],
-#                    [3, ' ']],
-#     'dimension': 2,
-#     'initial_list': [1, 2, 3, ' ']
+#     'empty_space': empty_space,
+#     'goal_state': [[1, 2, 3, 4],
+#                    [5, 6, 7, 8],
+#                    [9, 10, 11, 12],
+#                    [13, 14, 15, empty_space]],
+#     'dimension': 4,
+#     'num_of_shuffle_moves': 100,
+#     'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, empty_space]
 # }
+
+""" This example is to test code to see if we all get the same results (Line 44) """
+# puzzle_example = [[2, 5, 4],
+#                   [7, empty_space, 3],
+#                   [8, 1, 6]]
 
 
 class puzzle:
@@ -27,6 +39,10 @@ class puzzle:
         # self.start_state = self.__initialize_start_state()
         self.start_state = self.__shuffle_goal_state(
             config['num_of_shuffle_moves'])
+
+        """ This is to test code under same example (comment out self.start_state above) """
+        # self.start_state = copy.deepcopy(puzzle_example)
+
         self.expanded_nodes = 0
 
     def is_goal_state(self, state):
@@ -45,7 +61,12 @@ class puzzle:
         return shuffled_state
 
     def __initialize_start_state(self):
-        """ The return state may have an incomplete solution (i.e. Path could be None) """
+        """
+        The return state may have an incomplete solution (i.e. Path could be None)
+        e.g.:
+        [[1, 3],
+         [2, ' ']]
+        """
         initial_list = config['initial_list']
         random_puzzle = []
         for i in range(self.dimension):
@@ -117,6 +138,7 @@ class puzzle:
             print(self.start_state[i])
 
     def verify_computed_path(self, path):
+        """ NOTE: might be useful for implementing GUI progress """
         state = copy.deepcopy(self.start_state)
         for action in path:
             state = self.__get_successor_state(state, action)
