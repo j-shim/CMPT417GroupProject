@@ -1,0 +1,35 @@
+With the following fixed start state of puzzle_example in puzzle.py,
+I(June) got the following results:
+(Just wanted to double check peak memory usage is similar for all of us)
+
+Start State:
+[2, 5, 4]
+[7, ' ', 3]
+[8, 1, 6]
+
+***** depth_first_search *****
+Path length ----------------------------------> 113110 actions
+Time taken in seconds ------------------------> 41.6 seconds
+Expanded nodes -------------------------------> 128417 nodes
+Initial memory is ----------------------------> 0.0 MiB
+Current memory is ----------------------------> 1.0341682434082031 MiB
+Peak memory is -------------------------------> 94.25352573394775 MiB
+Verify Path leads Start State to Goal State --> True
+
+***** breadth_first_search *****
+Path length ----------------------------------> 14 actions
+Time taken in seconds ------------------------> 1.4 seconds
+Expanded nodes -------------------------------> 132618 nodes
+Initial memory is ----------------------------> 0.0 MiB
+Current memory is ----------------------------> 0.008586883544921875 MiB
+Peak memory is -------------------------------> 3.5395774841308594 MiB
+Verify Path leads Start State to Goal State --> True
+
+***** a_star_search *****
+Path length ----------------------------------> 14 actions
+Time taken in seconds ------------------------> 0.2 seconds
+Expanded nodes -------------------------------> 132917 nodes
+Initial memory is ----------------------------> 0.0 MiB
+Current memory is ----------------------------> 0.023944854736328125 MiB
+Peak memory is -------------------------------> 0.3566408157348633 MiB
+Verify Path leads Start State to Goal State --> True
