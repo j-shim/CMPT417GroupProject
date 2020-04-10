@@ -11,7 +11,11 @@ config = {
                    [7, 8, empty_space]],
     'dimension': 3,
     'num_of_shuffle_moves': 100,
-    'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, empty_space]
+    'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, empty_space],
+    'up': 'Up',
+    'down': 'Down',
+    'left': 'Left',
+    'right': 'Right'
 }
 
 """ Use this config for 15-puzzle (comment out other config) """
@@ -23,7 +27,11 @@ config = {
 #                    [13, 14, 15, empty_space]],
 #     'dimension': 4,
 #     'num_of_shuffle_moves': 100,
-#     'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, empty_space]
+#     'initial_list': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, empty_space],
+#     'up': 'Up',
+#     'down': 'Down',
+#     'left': 'Left',
+#     'right': 'Right'
 # }
 
 """ This example is to test code to see if we all get the same results (Line 44) """
@@ -97,17 +105,17 @@ class puzzle:
     def __get_successor_state(self, state, action):
         next_state = copy.deepcopy(state)
         empty_location = self.__get_empty_location(state)
-        if action == 'Up':
+        if action == config['up']:
             tmp = next_state[empty_location[0] - 1][empty_location[1]]
             next_state[empty_location[0] -
                        1][empty_location[1]] = config['empty_space']
             next_state[empty_location[0]][empty_location[1]] = tmp
-        elif action == 'Down':
+        elif action == config['down']:
             tmp = next_state[empty_location[0] + 1][empty_location[1]]
             next_state[empty_location[0] +
                        1][empty_location[1]] = config['empty_space']
             next_state[empty_location[0]][empty_location[1]] = tmp
-        elif action == 'Left':
+        elif action == config['left']:
             tmp = next_state[empty_location[0]][empty_location[1] - 1]
             next_state[empty_location[0]][empty_location[1] -
                                           1] = config['empty_space']
@@ -123,13 +131,13 @@ class puzzle:
         empty_location = self.__get_empty_location(state)
         actions = []
         if empty_location[0] - 1 >= 0:
-            actions.append('Up')
+            actions.append(config['up'])
         if empty_location[0] + 1 < self.dimension:
-            actions.append('Down')
+            actions.append(config['down'])
         if empty_location[1] - 1 >= 0:
-            actions.append('Left')
+            actions.append(config['left'])
         if empty_location[1] + 1 < self.dimension:
-            actions.append('Right')
+            actions.append(config['right'])
         return actions
 
     def print_start_state(self):
