@@ -42,7 +42,7 @@ def search_summary(selected_search, puzzle):
 
 
 if __name__ == '__main__':
-    puzzle_instance = puzzle.puzzle()
+    puzzle_instance = puzzle.Puzzle()
     # selected_search = search.depth_first_search
     # selected_search = search.breadth_first_search
     # selected_search = search.a_star_search

@@ -40,7 +40,7 @@ config = {
 #                   [8, 1, 6]]
 
 
-class puzzle:
+class Puzzle:
     def __init__(self):
         self.dimension = config['dimension']
         self.goal_state = config['goal_state']
