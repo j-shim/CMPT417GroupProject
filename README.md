@@ -48,6 +48,14 @@ brew update
 brew install python3 git
 ```
 
+### Install Python Packages with pip3
+
+Open up a Terminal and type:
+
+```bash
+pip3 install pygame
+```
+
 ### Cloning this repository onto your local machine
 
 Open up a Terminal, `cd` to your preferred directory and type:
