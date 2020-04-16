@@ -48,7 +48,7 @@ brew update
 brew install python3 git
 ```
 
-### Install Python Packages with pip3
+### Install Python Packages with pip3 - REQUIRED
 
 Open up a Terminal and type:
 
