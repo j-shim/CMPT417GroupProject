@@ -35,9 +35,9 @@ config = {
 # }
 
 """ This example is to test code to see if we all get the same results (Line 44) """
-# puzzle_example = [[2, 5, 4],
-#                   [7, empty_space, 3],
-#                   [8, 1, 6]]
+puzzle_example = [[2, 5, 4],
+                  [7, empty_space, 3],
+                  [8, 1, 6]]
 
 
 class Puzzle:
@@ -45,11 +45,12 @@ class Puzzle:
         self.dimension = config['dimension']
         self.goal_state = config['goal_state']
         # self.start_state = self.__initialize_start_state()
-        self.start_state = self.__shuffle_goal_state(
-            config['num_of_shuffle_moves'])
+        """ Option 1: Random Start State (Comment out one of the options) """
+        # self.start_state = self.__shuffle_goal_state(
+        #     config['num_of_shuffle_moves'])
 
-        """ This is to test code under same example (comment out self.start_state above) """
-        # self.start_state = copy.deepcopy(puzzle_example)
+        """ Option 2: Fixed Start State: This is to test code under same example (Comment out one of the options) """
+        self.start_state = copy.deepcopy(puzzle_example)
 
         self.expanded_nodes = 0
 
