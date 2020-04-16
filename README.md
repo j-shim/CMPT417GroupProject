@@ -83,4 +83,4 @@ python src/main.py
 ## Acknowledgments
 
 * README template adapted from https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
-* src/util.py adapted from http://ai.berkeley.edu/search.html (Specifically, from this [zip archive](http://ai.berkeley.edu/projects/release/search/v1/001/search.zip))
+* [src/util.py](https://github.com/j-shim/CMPT417GroupProject/blob/master/src/util.py) adapted from http://ai.berkeley.edu/search.html (Specifically, from this [zip archive](http://ai.berkeley.edu/projects/release/search/v1/001/search.zip))
