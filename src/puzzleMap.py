@@ -33,7 +33,6 @@ def init(puzzle):
     # Just for test, need import more cases
     # TODO: how to combine our code? also need to uniform the format
     # June: for now I'll create puzzle instance from main.py and pass it to this function as an argument
-    # Also, for now the start state is not random (for test purposes) -> this can be changed in puzzle.py (to undo this, comment out one of the options (Line 48 or 52))
     # Passing it as an argument rather than instantiating it here lets us use the same start state for different search algorithms
     puzzle_start_state = puzzle.get_start_state()
 
@@ -43,7 +42,7 @@ def init(puzzle):
     time_count = 0
 
     click = False
-    # Solution stored as list of actions (e.g. [Up, Down, Left, Right, Down])
+    # Path stored as list of actions (e.g. [Up, Down, Left, Right, Down])
     actions = None
 
     while True:
@@ -59,8 +58,13 @@ def init(puzzle):
                     actions = search_summary.search_summary(
                         search.a_star_search, puzzle)
                     # TODO: maybe we should stop timer, or moreover, should we be able to stop timer..? not sure about this
-                    # Also solution is stored in actions, might be useful for animation (also take a look at puzzle.verify_computed_path(path))
-                    print(actions)  # test purpose
+                    # Also path is stored in actions, might be useful for animation (also take a look at puzzle.verify_computed_path(path))
+
+                    print('Path:', actions)  # for debugging/visualizing
+                    # The two puzzle methods below may be useful for animation
+                    solution = puzzle.get_solution_as_list_of_states(actions)
+                    # 'solution' variable could be used for animation
+                    puzzle.print_solution(solution)
                     print('')
                 elif button_BFS.collidepoint(mouse_pos):
                     click = True

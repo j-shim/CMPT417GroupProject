@@ -35,9 +35,12 @@ config = {
 # }
 
 """ This example is to test code to see if we all get the same results (Line 44) """
-puzzle_example = [[2, 5, 4],
-                  [7, empty_space, 3],
-                  [8, 1, 6]]
+# puzzle_example = [[2, 5, 4],
+#                   [7, empty_space, 3],
+#                   [8, 1, 6]]
+# puzzle_example = [[8, 7, 4],
+#                   [2, 6, 5],
+#                   [' ', 1, 3]]
 
 
 class Puzzle:
@@ -46,11 +49,11 @@ class Puzzle:
         self.goal_state = config['goal_state']
         # self.start_state = self.__initialize_start_state()
         """ Option 1: Random Start State (Comment out one of the options) """
-        # self.start_state = self.__shuffle_goal_state(
-        #     config['num_of_shuffle_moves'])
+        self.start_state = self.__shuffle_goal_state(
+            config['num_of_shuffle_moves'])
 
         """ Option 2: Fixed Start State: This is to test code under same example (Comment out one of the options) """
-        self.start_state = copy.deepcopy(puzzle_example)
+        # self.start_state = copy.deepcopy(puzzle_example)
 
         self.expanded_nodes = 0
 
@@ -141,14 +144,21 @@ class Puzzle:
             actions.append(config['right'])
         return actions
 
-    def print_start_state(self):
-        print('Start State:')
+    def print_current_state(self, state):
         for i in range(self.dimension):
-            print(self.start_state[i])
+            print(state[i])
+        print('')
 
-    def verify_computed_path(self, path):
-        """ NOTE: might be useful for implementing GUI progress """
-        state = copy.deepcopy(self.start_state)
+    def print_solution(self, solution):
+        for state in solution:
+            self.print_current_state(state)
+
+    def get_solution_as_list_of_states(self, path):
+        """ Computes and returns the solution as a list of states from start_state to goal_state """
+        state = self.start_state
+        solution = []
+        solution.append(copy.deepcopy(state))
         for action in path:
             state = self.__get_successor_state(state, action)
-        return self.is_goal_state(state)
+            solution.append(copy.deepcopy(state))
+        return solution

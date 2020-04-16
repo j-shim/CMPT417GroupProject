@@ -21,7 +21,7 @@ def search_summary(selected_search, puzzle):
     current_mem = round(current_mem / (1024 ** 2), 6)
     peak_mem = round(peak_mem / (1024 ** 2), 6)
 
-    print(f'Path -----------------------------------------> {actions}')
+    # print(f'Path -----------------------------------------> {actions}')
     print(
         f'Path length ----------------------------------> {get_cost_of_actions(actions)} actions')
     print(
@@ -34,8 +34,6 @@ def search_summary(selected_search, puzzle):
         f'Current memory is ----------------------------> {current_mem} MiB')
     print(
         f'Peak memory is -------------------------------> {peak_mem} MiB (=Memory Usage)')
-    print(
-        f'Verify Path leads Start State to Goal State --> {puzzle.verify_computed_path(actions)}')
     print('')
 
     return actions
