@@ -36,11 +36,6 @@ def backtrace(start_state, goal_state, parent):
         key = parent[key][0]
 
 
-def get_cost_of_actions(actions):
-    if actions is None:
-        return None
-    return len(actions)
-
 
 def breadth_first_search(puzzle):
     fringe = util.Queue()
