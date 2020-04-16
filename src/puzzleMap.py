@@ -34,7 +34,7 @@ def init(puzzle):
     # TODO: how to combine our code? also need to uniform the format
     # June: for now I'll create puzzle instance from main.py and pass it to this function as an argument
     # Passing it as an argument rather than instantiating it here lets us use the same start state for different search algorithms
-    puzzle_start_state = puzzle.get_start_state()
+    current_state = puzzle.get_start_state()
 
     # Create a timer
     clock = pygame.time.Clock()
@@ -44,6 +44,8 @@ def init(puzzle):
     click = False
     # Path stored as list of actions (e.g. [Up, Down, Left, Right, Down])
     actions = None
+    solution = []  # for animation purpose
+    solution_index = 0  # for animation purpose
 
     while True:
         # Handle the exit case
@@ -55,17 +57,14 @@ def init(puzzle):
                 mouse_pos = event.pos
                 if button_Astar.collidepoint(mouse_pos):
                     click = True
+                    solution_index = 0  # for animation purpose
                     actions = search_summary.search_summary(
                         search.a_star_search, puzzle)
                     # TODO: maybe we should stop timer, or moreover, should we be able to stop timer..? not sure about this
                     # Also path is stored in actions, might be useful for animation (also take a look at puzzle.verify_computed_path(path))
 
-                    print('Path:', actions)  # for debugging/visualizing
-                    # The two puzzle methods below may be useful for animation
+                    # for animation purpose
                     solution = puzzle.get_solution_as_list_of_states(actions)
-                    # 'solution' variable could be used for animation
-                    puzzle.print_solution(solution)
-                    print('')
                 elif button_BFS.collidepoint(mouse_pos):
                     click = True
                     actions = search_summary.search_summary(
@@ -84,8 +83,7 @@ def init(puzzle):
                 rect = pygame.Rect(x*block_size, y*block_size,
                                    block_size, block_size)
                 pygame.draw.rect(window, BLACK, rect, 1)
-                text = big_font.render(
-                    str(puzzle_start_state[y][x]), True, BLACK)
+                text = big_font.render(str(current_state[y][x]), True, BLACK)
                 coordinate = (block_size*margin_x // 2,
                               block_size*margin_y // 2)
                 window.blit(text, coordinate)
@@ -93,6 +91,8 @@ def init(puzzle):
             margin_y += 2
 
         # Doing the time count
+        # NOTE: It seems like while search algorithm is being executed, this if block is not executed (I don't think pygame is asynchronous)
+        # As a result the clock ticks only after search algorithm is finished
         if click == True:
             total_seconds = time_count // frame_rate
             minutes = total_seconds // 60
@@ -104,6 +104,13 @@ def init(puzzle):
 
             time_count += 1
             clock.tick(frame_rate)
+
+        # Solution animation
+        # just a basic guideline of how the animation would be, using necessary variables
+        # Not sure how to further improve this..
+        if len(solution) > 0 and solution_index < len(solution):
+            current_state = solution[solution_index]
+            solution_index += 1
 
         # Draw different algo rects
         pygame.draw.rect(window, BROWN, button_Astar)
