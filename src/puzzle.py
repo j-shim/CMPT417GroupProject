@@ -90,10 +90,10 @@ class Puzzle:
             random_puzzle.append(row)
         return random_puzzle
 
-    def __get_empty_location(self, state):
+    def get_coordinates(self, state, value):
         for i in range(self.dimension):
             for j in range(self.dimension):
-                if state[i][j] == config['empty_space']:
+                if state[i][j] == value:
                     return i, j
         return None  # this should never happen
 
@@ -108,7 +108,7 @@ class Puzzle:
 
     def __get_successor_state(self, state, action):
         next_state = copy.deepcopy(state)
-        empty_location = self.__get_empty_location(state)
+        empty_location = self.get_coordinates(state, config['empty_space'])
         if action == config['up']:
             tmp = next_state[empty_location[0] - 1][empty_location[1]]
             next_state[empty_location[0] -
@@ -132,7 +132,7 @@ class Puzzle:
         return next_state
 
     def __get_legal_actions(self, state):
-        empty_location = self.__get_empty_location(state)
+        empty_location = self.get_coordinates(state, config['empty_space'])
         actions = []
         if empty_location[0] - 1 >= 0:
             actions.append(config['up'])

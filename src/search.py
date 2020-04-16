@@ -36,7 +36,6 @@ def backtrace(start_state, goal_state, parent):
         key = parent[key][0]
 
 
-
 def breadth_first_search(puzzle):
     fringe = util.Queue()
     start_state = puzzle.get_start_state()
@@ -62,11 +61,18 @@ def breadth_first_search(puzzle):
 
 
 def heuristic(state, puzzle):
+    """ heuristic = (sum of manhattanDistance(current_position, goal_position)) / 2 """
     h = 0
     for i in range(puzzle.dimension):
         for j in range(puzzle.dimension):
-            if state[i][j] != puzzle.goal_state[i][j]:
-                h += 1
+            # (0, 0) -> 1 as value, (0, 2) -> 3 as value, etc
+            value = i * puzzle.dimension + j + 1
+            if value == puzzle.dimension ** 2:  # value is ' '
+                value = ' '
+            current_position = puzzle.get_coordinates(state, value)
+            goal_position = (i, j)
+            h += util.manhattanDistance(current_position, goal_position)
+    h /= 2
     return h
 
 
