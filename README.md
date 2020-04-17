@@ -36,7 +36,7 @@ Open up a Terminal and type:
 
 ```bash
 sudo apt update
-sudo apt install python3 python3-dev python3-pip git
+sudo apt install python3 python3-dev python3-pip python3-pygame git
 ```
 
 ### macOS with [Homebrew](https://brew.sh/) Package Manager
@@ -48,7 +48,7 @@ brew update
 brew install python3 git
 ```
 
-### Install Python Packages with pip3 - REQUIRED
+### Install Python Packages with pip3 - REQUIRED (Windows, macOS)
 
 Open up a Terminal and type:
 
