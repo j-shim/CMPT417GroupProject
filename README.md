@@ -54,6 +54,8 @@ Open up a Terminal and type:
 
 ```bash
 pip3 install pygame
+# or, if pip3 does not work:
+pip install pygame
 ```
 
 ### Cloning this repository onto your local machine
