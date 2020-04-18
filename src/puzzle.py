@@ -49,7 +49,7 @@ class Puzzle:
         self.goal_state = config['goal_state']
         # self.start_state = self.__initialize_start_state()
         """ Option 1: Random Start State (Comment out one of the options) """
-        self.start_state = self.__shuffle_goal_state(
+        self.start_state = self.shuffle_goal_state(
             config['num_of_shuffle_moves'])
 
         """ Option 2: Fixed Start State: This is to test code under same example (Comment out one of the options) """
@@ -63,7 +63,7 @@ class Puzzle:
     def get_start_state(self):
         return copy.deepcopy(self.start_state)
 
-    def __shuffle_goal_state(self, num_of_shuffle_moves):
+    def shuffle_goal_state(self, num_of_shuffle_moves):
         """ The shuffled state will always have a complete solution (i.e. Path cannot be None) """
         shuffled_state = copy.deepcopy(self.goal_state)
         for i in range(num_of_shuffle_moves):
@@ -72,23 +72,26 @@ class Puzzle:
             shuffled_state = self.__get_successor_state(shuffled_state, action)
         return shuffled_state
 
-    def __initialize_start_state(self):
-        """
-        The return state may have an incomplete solution (i.e. Path could be None)
-        e.g.:
-        [[1, 3],
-         [2, ' ']]
-        """
-        initial_list = config['initial_list']
-        random_puzzle = []
-        for i in range(self.dimension):
-            row = []
-            for j in range(self.dimension):
-                chosen = random.choice(initial_list)
-                initial_list.remove(chosen)
-                row.append(chosen)
-            random_puzzle.append(row)
-        return random_puzzle
+    def reset(self):
+        self.__init__()
+
+    # def __initialize_start_state(self):
+    #     """
+    #     The return state may have an incomplete solution (i.e. Path could be None)
+    #     e.g.:
+    #     [[1, 3],
+    #      [2, ' ']]
+    #     """
+    #     initial_list = config['initial_list']
+    #     random_puzzle = []
+    #     for i in range(self.dimension):
+    #         row = []
+    #         for j in range(self.dimension):
+    #             chosen = random.choice(initial_list)
+    #             initial_list.remove(chosen)
+    #             row.append(chosen)
+    #         random_puzzle.append(row)
+    #     return random_puzzle
 
     def get_coordinates(self, state, value):
         for i in range(self.dimension):
