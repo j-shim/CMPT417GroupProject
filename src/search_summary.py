@@ -3,7 +3,9 @@ import tracemalloc  # for memory tracking
 
 
 def search_summary(selected_search, puzzle):
+    print('')
     print(f'***** {selected_search.__name__} *****')
+    print('Search Algorithm in Progress ...', end=' ')
     start_time = time.time()  # start timer
 
     tracemalloc.start()  # start memory tracking
@@ -21,7 +23,9 @@ def search_summary(selected_search, puzzle):
     current_mem = round(current_mem / (1024 ** 2), 6)
     peak_mem = round(peak_mem / (1024 ** 2), 6)
 
-    # print(f'Path -----------------------------------------> {actions}')
+    print('Done.')
+    print('')
+    print(f'Path -----------------------------------------> {actions}')
     print(
         f'Path length ----------------------------------> {get_cost_of_actions(actions)} actions')
     print(
@@ -34,9 +38,12 @@ def search_summary(selected_search, puzzle):
         f'Current memory is ----------------------------> {current_mem} MiB')
     print(
         f'Peak memory is -------------------------------> {peak_mem} MiB (=Memory Usage)')
-    print('')
 
-    return actions
+    print('Preparing Solution for Animation ...', end=' ')
+    solution = puzzle.get_solution_as_list_of_states(actions)
+    print('Done.')
+    print('')
+    return solution
 
 
 def get_cost_of_actions(actions):
