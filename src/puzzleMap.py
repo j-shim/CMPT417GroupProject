@@ -25,10 +25,11 @@ def init(puzzle):
     button_Astar = pygame.Rect(60, 350, 60, 30)
     button_BFS = pygame.Rect(150, 350, 60, 30)
     button_DFS = pygame.Rect(240, 350, 60, 30)
-    button_IDAstar = pygame.Rect(330, 350, 60, 30)
-    button_IDDFS = pygame.Rect(60, 400, 60, 30)
+    button_IDAstar = pygame.Rect(60, 400, 60, 30)
+    button_IDDFS = pygame.Rect(150, 400, 60, 30)
     button_play = pygame.Rect(330, 100, 60, 30)
-    button_reset = pygame.Rect(330, 400, 60, 30)
+    button_reset = pygame.Rect(370, 350, 85, 30)
+    button_restart = pygame.Rect(370, 400, 85, 30)
     button_speedup = pygame.Rect(370, 150, 30, 30)
     button_speeddown = pygame.Rect(330, 150, 30, 30)
     button_speedend = pygame.Rect(410, 150, 50, 30)
@@ -84,6 +85,10 @@ def init(puzzle):
                 elif button_reset.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = -1
                     solution_index = 0  # for animation purpose
+                    current_state = puzzle.get_start_state()
+                elif button_restart.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
+                    game_mode = -1
+                    solution_index = 0  # for animation purpose
                     puzzle.reset()
                     current_state = puzzle.get_start_state()
                 elif button_play.collidepoint(mouse_pos) and game_mode == -2:
@@ -135,18 +140,21 @@ def init(puzzle):
         pygame.draw.rect(window, BROWN, button_IDAstar)
         pygame.draw.rect(window, BROWN, button_IDDFS)
         pygame.draw.rect(window, BROWN, button_reset)
+        pygame.draw.rect(window, BROWN, button_restart)
         astar = small_font.render("A*", True, WHITE)
         bfs = small_font.render("BFS", True, WHITE)
         dfs = small_font.render("DFS", True, WHITE)
         ida_star = small_font.render("IDA*", True, WHITE)
         iddfs = small_font.render("IDDFS", True, WHITE)
         reset = small_font.render('RESET', True, WHITE)
+        restart = small_font.render('RESTART', True, WHITE)
         window.blit(astar, [80, 360])
         window.blit(bfs, [160, 360])
         window.blit(dfs, [250, 360])
-        window.blit(ida_star, [340, 360])
-        window.blit(iddfs, [65, 410])
-        window.blit(reset, [335, 410])
+        window.blit(ida_star, [70, 410])
+        window.blit(iddfs, [155, 410])
+        window.blit(reset, [380, 360])
+        window.blit(restart, [375, 410])
 
         # Show Play button as needed
         if len(solution) > 0 and game_mode == -2:
