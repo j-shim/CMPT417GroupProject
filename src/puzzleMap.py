@@ -11,7 +11,7 @@ def init(puzzle):
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     BROWN = (150, 75, 0)
-    GREEN = (0, 255, 0)
+    YELLOW = (255,255,153)
     RED = (255, 0, 0)
 
     # screen basic parameters
@@ -28,7 +28,7 @@ def init(puzzle):
     button_IDAstar = pygame.Rect(330, 350, 60, 30)
     button_IDDFS = pygame.Rect(60, 400, 60, 30)
     button_play = pygame.Rect(330, 100, 60, 30)
-    button_reset = pygame.Rect(330, 400, 60, 30)
+    button_reset = pygame.Rect(370, 430, 60, 40)
     button_speedup = pygame.Rect(370, 150, 30, 30)
     button_speeddown = pygame.Rect(330, 150, 30, 30)
     button_speedend = pygame.Rect(410, 150, 50, 30)
@@ -134,19 +134,19 @@ def init(puzzle):
         pygame.draw.rect(window, BROWN, button_DFS)
         pygame.draw.rect(window, BROWN, button_IDAstar)
         pygame.draw.rect(window, BROWN, button_IDDFS)
-        pygame.draw.rect(window, BROWN, button_reset)
+        pygame.draw.rect(window, YELLOW, button_reset)
         astar = small_font.render("A*", True, WHITE)
         bfs = small_font.render("BFS", True, WHITE)
         dfs = small_font.render("DFS", True, WHITE)
         ida_star = small_font.render("IDA*", True, WHITE)
         iddfs = small_font.render("IDDFS", True, WHITE)
-        reset = small_font.render('RESET', True, WHITE)
+        reset = small_font.render("Reset", True, RED)
         window.blit(astar, [80, 360])
         window.blit(bfs, [160, 360])
         window.blit(dfs, [250, 360])
         window.blit(ida_star, [340, 360])
         window.blit(iddfs, [65, 410])
-        window.blit(reset, [335, 410])
+        window.blit(reset, [380, 440])
 
         # Show Play button as needed
         if len(solution) > 0 and game_mode == -2:
