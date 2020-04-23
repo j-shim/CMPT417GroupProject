@@ -25,10 +25,11 @@ def init(puzzle):
     button_Astar = pygame.Rect(60, 350, 60, 30)
     button_BFS = pygame.Rect(150, 350, 60, 30)
     button_DFS = pygame.Rect(240, 350, 60, 30)
-    button_IDAstar = pygame.Rect(330, 350, 60, 30)
-    button_IDDFS = pygame.Rect(60, 400, 60, 30)
+    button_IDAstar = pygame.Rect(60, 400, 60, 30)
+    button_IDDFS = pygame.Rect(150, 400, 60, 30)
     button_play = pygame.Rect(330, 100, 60, 30)
-    button_reset = pygame.Rect(370, 430, 60, 40)
+    button_reset = pygame.Rect(370, 350, 85, 30)
+    button_restart = pygame.Rect(370, 400, 85, 30)
     button_speedup = pygame.Rect(370, 150, 30, 30)
     button_speeddown = pygame.Rect(330, 150, 30, 30)
     button_speedend = pygame.Rect(410, 150, 50, 30)
@@ -38,7 +39,8 @@ def init(puzzle):
     current_state = puzzle.get_start_state()
     search_options = [search.a_star_search,
                       search.breadth_first_search,
-                      search.depth_first_search]
+                      search.depth_first_search,
+                      search.ida_star]
     """ Game Mode:
     -1 = idle,
     -2 = ready to play animation,
@@ -81,7 +83,17 @@ def init(puzzle):
                 elif button_DFS.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = 2
                     solution_index = 0  # for animation purpose
+                elif button_IDAstar.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
+                    game_mode = 3
+                    solution_index = 0  # same above
+                elif button_IDDFS.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
+                    game_mode = 4
+                    solution_index = 0  # same above
                 elif button_reset.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
+                    game_mode = -1
+                    solution_index = 0  # for animation purpose
+                    current_state = puzzle.get_start_state()
+                elif button_restart.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = -1
                     solution_index = 0  # for animation purpose
                     puzzle.reset()
@@ -135,18 +147,21 @@ def init(puzzle):
         pygame.draw.rect(window, BROWN, button_IDAstar)
         pygame.draw.rect(window, BROWN, button_IDDFS)
         pygame.draw.rect(window, YELLOW, button_reset)
+        pygame.draw.rect(window, YELLOW, button_restart)
         astar = small_font.render("A*", True, WHITE)
         bfs = small_font.render("BFS", True, WHITE)
         dfs = small_font.render("DFS", True, WHITE)
         ida_star = small_font.render("IDA*", True, WHITE)
         iddfs = small_font.render("IDDFS", True, WHITE)
-        reset = small_font.render("Reset", True, RED)
+        reset = small_font.render('RESET', True, BROWN)
+        restart = small_font.render('RESTART', True, RED)
         window.blit(astar, [80, 360])
         window.blit(bfs, [160, 360])
         window.blit(dfs, [250, 360])
-        window.blit(ida_star, [340, 360])
-        window.blit(iddfs, [65, 410])
-        window.blit(reset, [380, 440])
+        window.blit(ida_star, [70, 410])
+        window.blit(iddfs, [155, 410])
+        window.blit(reset, [380, 360])
+        window.blit(restart, [375, 410])
 
         # Show Play button as needed
         if len(solution) > 0 and game_mode == -2:

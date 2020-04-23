@@ -107,3 +107,48 @@ def a_star_search(puzzle):
                     g[str(state)] = tentative_g
                     f[str(state)] = g[str(state)] + heuristic(state, puzzle)
                     fringe.update(state, f[str(state)])
+
+
+def search(path, g, bound, puzzle, expanded, parent):
+    node = path.pop()
+    f = g + heuristic(node, puzzle)
+    if f > bound:
+        return f
+    if puzzle.is_goal_state(node):
+        return True
+    min = float("inf")
+
+    for succ in puzzle.get_successors(node):
+        state, action, cost = succ
+        path.push(succ)
+        if expanded[str(state)] == 0:
+            parent[str(state)] = (str(node), action)
+            expanded[str(node)] += 1
+        t, p = search(path, g + cost, bound, puzzle, expanded, parent)
+        if t == True:
+            return True, p, node
+        if t < min:
+            min = t
+        path.pop()
+
+    return min, parent
+
+
+def ida_star(puzzle):
+    start_state = puzzle.get_start_state()
+    bound = heuristic(start_state, puzzle)
+    path = util.Stack()
+    path.push(start_state)
+    ##### ???
+    parent = {}
+    expanded = util.Counter()
+    #####
+    while True:
+        if path.isEmpty():
+            return None        
+        t, p, node = search(path, 0, bound, puzzle, expanded, parent)
+        if t == True:
+            return backtrace(start_state, node, p)
+        else:
+            return None
+        bound = t
