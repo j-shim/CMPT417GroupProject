@@ -1,4 +1,5 @@
 import util
+import copy
 
 
 def depth_first_search(puzzle):
@@ -109,46 +110,130 @@ def a_star_search(puzzle):
                     fringe.update(state, f[str(state)])
 
 
-def search(path, g, bound, puzzle, expanded, parent):
-    node = path.pop()
+# ida* algorithm
+# Reference used(pseudocode): https://en.wikipedia.org/wiki/Iterative_deepening_A*    
+
+def search(path, g, bound, puzzle):
+    node = copy.deepcopy(path.list[len(path.list) - 1])  # copy last element
     f = g + heuristic(node, puzzle)
     if f > bound:
-        return f
+        return False, f
     if puzzle.is_goal_state(node):
-        return True
-    min = float("inf")
+        return True, 0  # 0 is dummy value (don't need f value)
+    min_value = float('inf')
 
     for succ in puzzle.get_successors(node):
-        state, action, cost = succ
-        path.push(succ)
-        if expanded[str(state)] == 0:
-            parent[str(state)] = (str(node), action)
-            expanded[str(node)] += 1
-        t, p = search(path, g + cost, bound, puzzle, expanded, parent)
-        if t == True:
-            return True, p, node
-        if t < min:
-            min = t
-        path.pop()
+        state, action, cost = succ  # don't need 'action' value
+        if state not in path.list:
+            path.push(state)
+            found, new_bound = search(path, g + cost, bound, puzzle)
+            if found:
+                return found, 0  # 0 is dummy value
+            if new_bound < min_value:
+                min_value = new_bound
+            path.pop()
 
-    return min, parent
+    return False, min_value
 
 
 def ida_star(puzzle):
+    infinity = float('inf')
     start_state = puzzle.get_start_state()
     bound = heuristic(start_state, puzzle)
-    path = util.Stack()
+    # util.Stack is a class. Use util.Stack().list to return a list of states
+    path = util.Stack()  # this will be the solution (list of states from start to goal)
     path.push(start_state)
-    ##### ???
-    parent = {}
-    expanded = util.Counter()
-    #####
     while True:
-        if path.isEmpty():
-            return None        
-        t, p, node = search(path, 0, bound, puzzle, expanded, parent)
-        if t == True:
-            return backtrace(start_state, node, p)
-        else:
+        found, new_bound = search(path, 0, bound, puzzle)
+        if found:
+            # path.list is a list of states: for consistency with other search functions, we return a list of actions (e.g. ["Up", "Left", "Right"])
+            return puzzle.convert_solution_from_states_to_actions(path.list)
+        if new_bound >= infinity:
             return None
-        bound = t
+        bound = new_bound
+
+
+# iddfs function
+# non-recursion version
+# Reference used(pseudocode): https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search
+
+def iddfs_search_no_recursive(puzzle):
+    max_int = 999999
+    for max_depth in range(max_int):
+        found, remaining = depth_limited_dfs_no_recursive(puzzle, max_depth)
+        if found is not None:
+            return found
+        elif not remaining:
+            return None
+
+
+def depth_limited_dfs_no_recursive(puzzle, max_depth):
+    fringe = util.Stack()
+    start_state = puzzle.get_start_state()
+    root_depth = 0
+    any_remaining = False
+    fringe.push((start_state, root_depth))
+    expanded = util.Counter()
+    parent = {}
+    while True:
+        if fringe.isEmpty():
+            return None, any_remaining
+
+        node, node_depth = fringe.pop()
+
+        if puzzle.is_goal_state(node):
+            return backtrace(start_state, node, parent), any_remaining
+
+        expanded[str(node)] += 1
+
+        successors = puzzle.get_successors(node)
+        if node_depth < max_depth:
+            for successor in successors:
+                state, action, cost = successor
+                if expanded[str(state)] == 0:
+                    fringe.push((state, node_depth + 1))
+                    parent[str(state)] = (str(node), action)
+        elif len(successors) > 0:
+            any_remaining = True
+
+
+# recursion version
+
+def iddfs_search(puzzle):
+    max_int = 999999
+    start_state = puzzle.get_start_state()
+    for depth in range(max_int):
+        expanded = util.Counter()
+        parent = {}
+        found, remaining = depth_limited_dfs(
+            puzzle, start_state, depth, expanded, parent)
+        if found is not None:
+            return backtrace(start_state, found, parent)
+        elif not remaining:
+            return None
+
+
+def depth_limited_dfs(puzzle, current_state, depth, expanded, parent):
+    if depth == 0:
+        if puzzle.is_goal_state(current_state):
+            return (current_state, True)
+        else:
+            return (None, True)  # (Not found, but may have children)
+    elif depth > 0:
+        any_remaining = False
+
+        expanded[str(current_state)] += 1
+        successor_states = puzzle.get_successors(current_state)
+        for successor in successor_states:
+            state, action, cost = successor
+            if expanded[str(state)] == 0:
+                parent[str(state)] = (str(current_state), action)
+
+                found, remaining = depth_limited_dfs(
+                    puzzle, state, depth - 1, expanded, parent)
+                if found is not None:
+                    return (found, True)
+                if remaining:
+                    # (At least one node found at depth, let IDDFS deepen)
+                    any_remaining = True
+        return (None, any_remaining)
