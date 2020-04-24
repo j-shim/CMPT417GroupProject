@@ -15,7 +15,6 @@
 3. Breadth-First Search (BFS) algorithm
 4. Depth-First Search (DFS) algorithm
 5. Iterative Deepening Depth-first Search (IDDFS) algorithm
-6. AL* algorithm
 
 ## Setup
 
