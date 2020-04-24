@@ -147,6 +147,15 @@ class Puzzle:
             actions.append(config['right'])
         return actions
 
+    def __extract_action(self, old_state, new_state):
+        """ Finds action that leads old_state to new_state """
+        legal_actions = self.__get_legal_actions(old_state)
+        for action in legal_actions:
+            next_state = self.__get_successor_state(old_state, action)
+            if next_state == new_state:
+                return action
+        return None  # this should never happen
+
     def print_current_state(self, state):
         for i in range(self.dimension):
             print(state[i])
@@ -165,3 +174,11 @@ class Puzzle:
             state = self.__get_successor_state(state, action)
             solution.append(copy.deepcopy(state))
         return solution
+
+    def convert_solution_from_states_to_actions(self, solution):
+        """ Reverse operation of get_solution_as_list_of_states() """
+        path = []
+        for i in range(len(solution) - 1):
+            action = self.__extract_action(solution[i], solution[i + 1])
+            path.append(action)
+        return path

@@ -5,29 +5,32 @@ import search
 import search_summary
 from pygame.locals import *
 
+# some colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BROWN = (150, 75, 0)
+YELLOW = (255,255,153)
+RED = (255, 0, 0)
+BG = (184, 241, 237)
+
+# screen basic parameters
+width = 500
+height = 500
+block_size = 100
+
 
 def init(puzzle):
-    # some colors
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
-    BROWN = (150, 75, 0)
-    GREEN = (0, 255, 0)
-    RED = (255, 0, 0)
-
-    # screen basic parameters
-    width = 500
-    height = 500
-    block_size = 100
 
     pygame.init()
     window = pygame.display.set_mode((width, height))
+    
     pygame.display.set_caption('3x3 Sliding Puzzle')
     button_Astar = pygame.Rect(60, 350, 60, 30)
     button_BFS = pygame.Rect(150, 350, 60, 30)
     button_DFS = pygame.Rect(240, 350, 60, 30)
     button_IDAstar = pygame.Rect(60, 400, 60, 30)
     button_IDDFS = pygame.Rect(150, 400, 60, 30)
-    button_play = pygame.Rect(330, 100, 60, 30)
+    button_play = pygame.Rect(330, 100, 140, 30)
     button_reset = pygame.Rect(370, 350, 85, 30)
     button_restart = pygame.Rect(370, 400, 85, 30)
     button_speedup = pygame.Rect(370, 150, 30, 30)
@@ -39,7 +42,9 @@ def init(puzzle):
     current_state = puzzle.get_start_state()
     search_options = [search.a_star_search,
                       search.breadth_first_search,
-                      search.depth_first_search]
+                      search.depth_first_search,
+                      search.ida_star,
+                      search.iddfs_search_no_recursive]
     """ Game Mode:
     -1 = idle,
     -2 = ready to play animation,
@@ -47,6 +52,7 @@ def init(puzzle):
     >= 0: perform selected search
     """
     game_mode = -1
+    flag = [False, False, False, False, False]
 
     # Create a timer
     clock = pygame.time.Clock()
@@ -57,12 +63,15 @@ def init(puzzle):
     solution_index = 0
 
     running = True
+    round_times = 1
 
     while running:
+
+        window.fill(BG)
         # Perform selected search
         if game_mode >= 0:
             solution = search_summary.search_summary(
-                search_options[game_mode], puzzle)
+                search_options[game_mode], puzzle, round_times)
             game_mode = -2
             current_state = puzzle.get_start_state()
 
@@ -76,12 +85,23 @@ def init(puzzle):
                 if button_Astar.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = 0
                     solution_index = 0  # for animation purpose
+                    flag[0] = True
                 elif button_BFS.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = 1
                     solution_index = 0  # for animation purpose
+                    flag[1] = True
                 elif button_DFS.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = 2
                     solution_index = 0  # for animation purpose
+                    flag[2] = True
+                elif button_IDAstar.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
+                    game_mode = 3
+                    solution_index = 0  # same above
+                    flag[3] = True
+                elif button_IDDFS.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
+                    game_mode = 4
+                    solution_index = 0  # same above
+                    flag[4] = True
                 elif button_reset.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = -1
                     solution_index = 0  # for animation purpose
@@ -89,6 +109,9 @@ def init(puzzle):
                 elif button_restart.collidepoint(mouse_pos) and (game_mode == -1 or game_mode == -2):
                     game_mode = -1
                     solution_index = 0  # for animation purpose
+                    # a new round start!
+                    flag = [False, False, False, False, False]
+                    round_times += 1 
                     puzzle.reset()
                     current_state = puzzle.get_start_state()
                 elif button_play.collidepoint(mouse_pos) and game_mode == -2:
@@ -139,27 +162,36 @@ def init(puzzle):
         pygame.draw.rect(window, BROWN, button_DFS)
         pygame.draw.rect(window, BROWN, button_IDAstar)
         pygame.draw.rect(window, BROWN, button_IDDFS)
-        pygame.draw.rect(window, BROWN, button_reset)
-        pygame.draw.rect(window, BROWN, button_restart)
+        pygame.draw.rect(window, YELLOW, button_reset)
+        
+        textStr = 'Round # '+str(round_times)
+        round_num = small_font.render(textStr, True, BLACK)
         astar = small_font.render("A*", True, WHITE)
         bfs = small_font.render("BFS", True, WHITE)
         dfs = small_font.render("DFS", True, WHITE)
         ida_star = small_font.render("IDA*", True, WHITE)
         iddfs = small_font.render("IDDFS", True, WHITE)
-        reset = small_font.render('RESET', True, WHITE)
-        restart = small_font.render('RESTART', True, WHITE)
+        reset = small_font.render('RESET', True, BROWN)
+        restart = small_font.render('RESTART', True, RED)
+        done = small_font.render('Summary report has been generated.', True, BLACK)
+        window.blit(round_num, [335, 10])
         window.blit(astar, [80, 360])
         window.blit(bfs, [160, 360])
         window.blit(dfs, [250, 360])
         window.blit(ida_star, [70, 410])
         window.blit(iddfs, [155, 410])
         window.blit(reset, [380, 360])
-        window.blit(restart, [375, 410])
+        # Game done for a round
+        if not False in flag:
+            pygame.draw.rect(window, YELLOW, button_restart)
+            window.blit(done, [150, 460])
+            window.blit(restart, [375, 410])
+            
 
         # Show Play button as needed
         if len(solution) > 0 and game_mode == -2:
             pygame.draw.rect(window, BROWN, button_play)
-            play = small_font.render('PLAY', True, WHITE)
+            play = small_font.render('Play Animation', True, WHITE)
             window.blit(play, [335, 110])
 
         # Show -, +, END buttons on PLAY mode
@@ -185,3 +217,4 @@ def init(puzzle):
         clock.tick(frame_rate)
 
     pygame.quit()
+
