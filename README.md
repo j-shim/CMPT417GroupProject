@@ -77,7 +77,7 @@ python src/main.py
 
 ## Authors
 
-* **Xiaolu (Christina) Zhu** (TODO: add more info)
+* **Xiaolu (Christina) Zhu** - xza172@sfu.ca
 * **Yusong (Ethan) Cai** (TODO: add more info)
 * **Joo-Young (June) Shim** - jys2@sfu.ca / [GitHub](https://github.com/j-shim)
 
