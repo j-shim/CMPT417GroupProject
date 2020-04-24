@@ -1,0 +1,9 @@
+
+***** depth_first_search *****
+Path -------------------------------> ['Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up'] ...too long, omit rest actions
+Path length --------------------------------> 3012 actions
+Time taken in seconds ----------------------> 0.83 seconds
+Expanded nodes -----------------------------> 3077 nodes
+Initial memory is --------------------------> 0.0 MiB
+Current memory is --------------------------> 0.122669 MiB
+Peak memory is -----------------------------> 2.651572 MiB (=Memory Usage)
