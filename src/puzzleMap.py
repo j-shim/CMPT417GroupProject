@@ -30,7 +30,7 @@ def init(puzzle):
     button_DFS = pygame.Rect(240, 350, 60, 30)
     button_IDAstar = pygame.Rect(60, 400, 60, 30)
     button_IDDFS = pygame.Rect(150, 400, 60, 30)
-    button_play = pygame.Rect(330, 100, 140, 30)
+    button_play = pygame.Rect(330, 100, 120, 30)
     button_reset = pygame.Rect(370, 350, 85, 30)
     button_restart = pygame.Rect(370, 400, 85, 30)
     button_speedup = pygame.Rect(370, 150, 30, 30)
@@ -191,7 +191,7 @@ def init(puzzle):
         # Show Play button as needed
         if len(solution) > 0 and game_mode == -2:
             pygame.draw.rect(window, BROWN, button_play)
-            play = small_font.render('Play Animation', True, WHITE)
+            play = small_font.render('Show Steps', True, WHITE)
             window.blit(play, [335, 110])
 
         # Show -, +, END buttons on PLAY mode

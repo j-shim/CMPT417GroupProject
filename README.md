@@ -2,11 +2,13 @@
 
 * In this project, we will be studying different search algorithms for solving a puzzle.
 
-* In particular, we will be focusing on A*, iterative deepening A*, breadth-first search(BFS), depth-first search(DFS), iterative deepening depth-first search(IDDFS) and AL*.
+* In particular, we will be focusing on A*, iterative deepening A*, breadth-first search(BFS), depth-first search(DFS) and iterative deepening depth-first search(IDDFS).
 
 * We will be testing the algorithms on a 8-puzzle. We will be comparing the algorithms by their completeness, optimality, time taken and the number of nodes expanded.
 
 * We will be focusing on the time/space efficiency of the algorithms on different instances of the puzzles.
+
+* Click [here](#usage) to jump to Usage.
 
 ## Methodology
 
@@ -77,11 +79,16 @@ python src/main.py
 
 ## Authors
 
-* **Xiaolu (Christina) Zhu** - xza172@sfu.ca
-* **Yusong (Ethan) Cai** (TODO: add more info)
+* **Xiaolu (Christina) Zhu** - xza172@sfu.ca / [GitHub](https://github.com/Christinalu)
+* **Yusong (Ethan) Cai** - yusongc@sfu.ca / [GitHub](https://github.com/yusongc)
 * **Joo-Young (June) Shim** - jys2@sfu.ca / [GitHub](https://github.com/j-shim)
 
 ## Acknowledgments
 
 * README template adapted from https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
 * [src/util.py](https://github.com/j-shim/CMPT417GroupProject/blob/master/src/util.py) adapted from http://ai.berkeley.edu/search.html (Specifically, from this [zip archive](http://ai.berkeley.edu/projects/release/search/v1/001/search.zip))
+* [A* algorithm pseudocode](https://en.wikipedia.org/wiki/A*_search_algorithm)
+* [IDA* algorithm pseudocode](https://en.wikipedia.org/wiki/Iterative_deepening_A*)
+* [BFS algorithm pseudocode](https://en.wikipedia.org/wiki/Breadth-first_search)
+* [DFS algorithm pseudocode](https://en.wikipedia.org/wiki/Depth-first_search)
+* [IDDFS algorithm pseudocode](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search)

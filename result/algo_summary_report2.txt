@@ -1,0 +1,45 @@
+
+***** a_star_search *****
+Path -------------------------------> ['Up', 'Left', 'Down', 'Right', 'Down', 'Right']
+Path length --------------------------------> 6 actions
+Time taken in seconds ----------------------> 0.02 seconds
+Expanded nodes -----------------------------> 14 nodes
+Initial memory is --------------------------> 0.0 MiB
+Current memory is --------------------------> 0.001801 MiB
+Peak memory is -----------------------------> 0.019211 MiB (=Memory Usage)
+
+***** ida_star *****
+Path -------------------------------> ['Up', 'Left', 'Down', 'Right', 'Down', 'Right']
+Path length --------------------------------> 6 actions
+Time taken in seconds ----------------------> 0.01 seconds
+Expanded nodes -----------------------------> 28 nodes
+Initial memory is --------------------------> 0.0 MiB
+Current memory is --------------------------> 0.007141 MiB
+Peak memory is -----------------------------> 0.011848 MiB (=Memory Usage)
+
+***** breadth_first_search *****
+Path -------------------------------> ['Up', 'Left', 'Down', 'Right', 'Down', 'Right']
+Path length --------------------------------> 6 actions
+Time taken in seconds ----------------------> 0.04 seconds
+Expanded nodes -----------------------------> 102 nodes
+Initial memory is --------------------------> 0.0 MiB
+Current memory is --------------------------> 0.003113 MiB
+Peak memory is -----------------------------> 0.061516 MiB (=Memory Usage)
+
+***** iddfs_search_no_recursive *****
+Path -------------------------------> ['Up', 'Left', 'Down', 'Right', 'Down', 'Right']
+Path length --------------------------------> 6 actions
+Time taken in seconds ----------------------> 0.06 seconds
+Expanded nodes -----------------------------> 369 nodes
+Initial memory is --------------------------> 0.0 MiB
+Current memory is --------------------------> 8.8e-05 MiB
+Peak memory is -----------------------------> 0.040268 MiB (=Memory Usage)
+
+***** depth_first_search *****
+Path -------------------------------> ['Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up', 'Right', 'Right', 'Down', 'Left', 'Left', 'Up'] ...too long, omit rest actions
+Path length --------------------------------> 2572 actions
+Time taken in seconds ----------------------> 0.57 seconds
+Expanded nodes -----------------------------> 2993 nodes
+Initial memory is --------------------------> 0.0 MiB
+Current memory is --------------------------> 0.027462 MiB
+Peak memory is -----------------------------> 2.205161 MiB (=Memory Usage)
